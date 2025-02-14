@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma Valentine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffe6e6;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            color: #ff4d4d;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #non {
+            opacity: 0.5;
+            position: absolute;
+        }
+        #fleurs {
+            max-width: 300px;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Est-ce que tu veux Ãªtre ma valentine ?</h1>
+        <div class="buttons">
+            <button id="oui">Oui</button>
+            <button id="non">Non</button>
+        </div>
+        <img id="fleurs" src="https://example.com/bouquet-de-fleurs.jpg" alt="Bouquet de fleurs">
+    </div>
+
+    <script>
+        let ouiSize = 18;
+        const oui = document.getElementById('oui');
+        const non = document.getElementById('non');
+        const fleurs = document.getElementById('fleurs');
+
+        oui.addEventListener('click', function() {
+            fleurs.style.display = 'block';
+        });
+
+        function moveButton() {
+            const maxX = window.innerWidth - non.offsetWidth;
+            const maxY = window.innerHeight - non.offsetHeight;
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            non.style.left = randomX + 'px';
+            non.style.top = randomY + 'px';
+
+            ouiSize += 2;
+            oui.style.fontSize = ouiSize + 'px';
+            oui.style.padding = (10 + ouiSize/18) + 'px ' + (20 + ouiSize/9) + 'px';
+        }
+
+        non.addEventListener('mouseover', moveButton);
+        non.addEventListener('click', moveButton);
+    </script>
+</body>
+</html>
