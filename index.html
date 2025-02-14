@@ -45,6 +45,7 @@
             justify-content: center;
             gap: 20px;
             margin-top: 20px;
+            position: relative;
         }
 
         button {
@@ -56,6 +57,7 @@
             transition: all 0.3s ease-in-out;
             font-weight: 700;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
         }
 
         #oui {
@@ -73,7 +75,7 @@
             background: #ccc;
             color: #555;
             position: absolute;
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.3s ease-in-out, left 0.3s ease-in-out, top 0.3s ease-in-out;
         }
 
         #fleurs {
@@ -93,45 +95,23 @@
         }
 
         @keyframes popIn {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         @keyframes glow {
-            from {
-                text-shadow: 0 0 10px #ff6666, 0 0 20px #ff3333;
-            }
-            to {
-                text-shadow: 0 0 15px #ff9999, 0 0 30px #ff6666;
-            }
+            from { text-shadow: 0 0 10px #ff6666, 0 0 20px #ff3333; }
+            to { text-shadow: 0 0 15px #ff9999, 0 0 30px #ff6666; }
         }
 
         @keyframes pulse {
-            from {
-                transform: scale(1);
-                box-shadow: 0 0 15px rgba(255, 77, 77, 0.7);
-            }
-            to {
-                transform: scale(1.1);
-                box-shadow: 0 0 25px rgba(255, 0, 0, 0.9);
-            }
+            from { transform: scale(1); box-shadow: 0 0 15px rgba(255, 77, 77, 0.7); }
+            to { transform: scale(1.1); box-shadow: 0 0 25px rgba(255, 0, 0, 0.9); }
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -160,12 +140,17 @@
         });
 
         function moveButton() {
-            const maxX = window.innerWidth - non.offsetWidth;
-            const maxY = window.innerHeight - non.offsetHeight;
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
-            
-            non.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            const maxX = window.innerWidth - non.offsetWidth - 20;
+            const maxY = window.innerHeight - non.offsetHeight - 20;
+            let randomX = Math.floor(Math.random() * maxX);
+            let randomY = Math.floor(Math.random() * maxY);
+
+            // Limite pour éviter de sortir de l'écran
+            if (randomX < 20) randomX = 20;
+            if (randomY < 20) randomY = 20;
+
+            non.style.left = randomX + 'px';
+            non.style.top = randomY + 'px';
 
             ouiSize += 2;
             oui.style.fontSize = ouiSize + 'px';
