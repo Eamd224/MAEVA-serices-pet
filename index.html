@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ma Valentine 💖</title>
+    <title>Ma Valentine ❤️🔥</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -18,23 +18,26 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            background: radial-gradient(circle, #ff4d4d, #ff1a1a, #8b0000);
             overflow: hidden;
             text-align: center;
+            position: relative;
         }
 
         .container {
             background: white;
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
             animation: fadeIn 1s ease-in-out;
         }
 
         h1 {
             color: #ff4d4d;
-            font-weight: 600;
-            margin-bottom: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px #ff8080;
+            animation: glow 1.5s infinite alternate;
         }
 
         .buttons {
@@ -46,23 +49,24 @@
 
         button {
             font-size: 18px;
-            padding: 12px 25px;
+            padding: 12px 30px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease-in-out;
-            font-weight: 600;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         #oui {
-            background: #ff4d4d;
+            background: #ff1a1a;
             color: white;
-            box-shadow: 0 4px 10px rgba(255, 77, 77, 0.3);
+            animation: pulse 1.5s infinite alternate;
         }
 
         #oui:hover {
-            background: #e60000;
-            transform: scale(1.1);
+            background: #b30000;
+            transform: scale(1.2);
         }
 
         #non {
@@ -79,6 +83,15 @@
             animation: popIn 0.5s ease-in-out;
         }
 
+        .fireworks {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            top: 0;
+            left: 0;
+        }
+
         @keyframes popIn {
             0% {
                 transform: scale(0);
@@ -87,6 +100,26 @@
             100% {
                 transform: scale(1);
                 opacity: 1;
+            }
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #ff6666, 0 0 20px #ff3333;
+            }
+            to {
+                text-shadow: 0 0 15px #ff9999, 0 0 30px #ff6666;
+            }
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+                box-shadow: 0 0 15px rgba(255, 77, 77, 0.7);
+            }
+            to {
+                transform: scale(1.1);
+                box-shadow: 0 0 25px rgba(255, 0, 0, 0.9);
             }
         }
 
@@ -104,13 +137,15 @@
 </head>
 <body>
     <div class="container">
-        <h1>Est-ce que tu veux être ma Valentine ? 💘</h1>
+        <h1>Veux-tu être ma Valentine ? ❤️🔥</h1>
         <div class="buttons">
-            <button id="oui">Oui 💖</button>
-            <button id="non">Non 😢</button>
+            <button id="oui">OUI 🎆</button>
+            <button id="non">NON 😭</button>
         </div>
         <img id="fleurs" src="https://img1.bonnesimages.com/bi/saint-valentin/saint-valentin_021.jpg" alt="Bouquet de fleurs">
     </div>
+
+    <canvas class="fireworks"></canvas>
 
     <script>
         const oui = document.getElementById('oui');
@@ -121,6 +156,7 @@
 
         oui.addEventListener('click', function() {
             fleurs.style.display = 'block';
+            startFireworks();
         });
 
         function moveButton() {
@@ -133,11 +169,55 @@
 
             ouiSize += 2;
             oui.style.fontSize = ouiSize + 'px';
-            oui.style.padding = (12 + ouiSize / 18) + 'px ' + (25 + ouiSize / 9) + 'px';
+            oui.style.padding = (12 + ouiSize / 18) + 'px ' + (30 + ouiSize / 9) + 'px';
         }
 
         non.addEventListener('mouseover', moveButton);
         non.addEventListener('click', moveButton);
+
+        function startFireworks() {
+            const canvas = document.querySelector('.fireworks');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+
+            function createParticle(x, y) {
+                for (let i = 0; i < 30; i++) {
+                    particles.push({
+                        x,
+                        y,
+                        angle: Math.random() * 2 * Math.PI,
+                        speed: Math.random() * 4 + 2,
+                        radius: Math.random() * 3 + 1,
+                        alpha: 1
+                    });
+                }
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = 0; i < particles.length; i++) {
+                    let p = particles[i];
+                    p.x += Math.cos(p.angle) * p.speed;
+                    p.y += Math.sin(p.angle) * p.speed;
+                    p.alpha -= 0.02;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, ${Math.random() * 255}, 0, ${p.alpha})`;
+                    ctx.fill();
+                }
+
+                particles.filter(p => p.alpha > 0);
+                requestAnimationFrame(animateParticles);
+            }
+
+            createParticle(window.innerWidth / 2, window.innerHeight / 2);
+            animateParticles();
+        }
     </script>
 </body>
 </html>
