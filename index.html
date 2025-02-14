@@ -3,60 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ma Valentine</title>
+    <title>Ma Valentine 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            background-color: #ffe6e6;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
             overflow: hidden;
-        }
-        .container {
             text-align: center;
         }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+
         h1 {
             color: #ff4d4d;
+            font-weight: 600;
+            margin-bottom: 20px;
         }
+
         .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
             margin-top: 20px;
         }
+
         button {
             font-size: 18px;
-            padding: 10px 20px;
-            margin: 0 10px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s ease-in-out;
+            font-weight: 600;
         }
+
+        #oui {
+            background: #ff4d4d;
+            color: white;
+            box-shadow: 0 4px 10px rgba(255, 77, 77, 0.3);
+        }
+
+        #oui:hover {
+            background: #e60000;
+            transform: scale(1.1);
+        }
+
         #non {
-            opacity: 0.5;
+            background: #ccc;
+            color: #555;
             position: absolute;
+            transition: transform 0.3s ease-in-out;
         }
+
         #fleurs {
-            max-width: 300px;
+            max-width: 250px;
             margin-top: 20px;
             display: none;
+            animation: popIn 0.5s ease-in-out;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Est-ce que tu veux etre ma valentine ?</h1>
+        <h1>Est-ce que tu veux être ma Valentine ? 💘</h1>
         <div class="buttons">
-            <button id="oui">Oui</button>
-            <button id="non">Non</button>
+            <button id="oui">Oui 💖</button>
+            <button id="non">Non 😢</button>
         </div>
         <img id="fleurs" src="https://img1.bonnesimages.com/bi/saint-valentin/saint-valentin_021.jpg" alt="Bouquet de fleurs">
     </div>
 
     <script>
-        let ouiSize = 18;
         const oui = document.getElementById('oui');
         const non = document.getElementById('non');
         const fleurs = document.getElementById('fleurs');
+
+        let ouiSize = 18;
 
         oui.addEventListener('click', function() {
             fleurs.style.display = 'block';
@@ -68,12 +129,11 @@
             const randomX = Math.floor(Math.random() * maxX);
             const randomY = Math.floor(Math.random() * maxY);
             
-            non.style.left = randomX + 'px';
-            non.style.top = randomY + 'px';
+            non.style.transform = `translate(${randomX}px, ${randomY}px)`;
 
             ouiSize += 2;
             oui.style.fontSize = ouiSize + 'px';
-            oui.style.padding = (10 + ouiSize/18) + 'px ' + (20 + ouiSize/9) + 'px';
+            oui.style.padding = (12 + ouiSize / 18) + 'px ' + (25 + ouiSize / 9) + 'px';
         }
 
         non.addEventListener('mouseover', moveButton);
