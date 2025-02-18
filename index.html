@@ -17,8 +17,6 @@
         }
         .container {
             text-align: center;
-            position: relative;
-            z-index: 1;
         }
         h1 {
             color: #ff4d4d;
@@ -42,18 +40,11 @@
             margin-top: 20px;
             display: none;
         }
-        .heart {
-            position: fixed;
-            font-size: 20px;
-            color: #ff4d4d;
-            user-select: none;
-            pointer-events: none;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Est-ce que tu veux être ma valentine ?</h1>
+        <h1>Est-ce que tu veux Ãªtre ma valentine ?</h1>
         <div class="buttons">
             <button id="oui">Oui</button>
             <button id="non">Non</button>
@@ -67,24 +58,8 @@
         const non = document.getElementById('non');
         const fleurs = document.getElementById('fleurs');
 
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
-            document.body.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
-        }
-
         oui.addEventListener('click', function() {
             fleurs.style.display = 'block';
-            for (let i = 0; i < 50; i++) {
-                setTimeout(createHeart, i * 100);
-            }
         });
 
         function moveButton() {
