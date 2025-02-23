@@ -22,6 +22,7 @@
         .heart {
             font-size: 4em;
             color: red;
+            animation: blink 1s infinite alternate;
         }
         .image {
             width: 300px;
@@ -29,12 +30,32 @@
             border-radius: 20px;
             margin-top: 20px;
         }
+        @keyframes blink {
+            0% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
     </style>
 </head>
 <body>
     <h1>Joyeux Anniversaire Mon Amour !</h1>
     <p class="message">Que cette journée soit remplie de bonheur, d'amour et de surprises ! Tu es la plus merveilleuse et je t'aime de tout mon cœur ❤️</p>
+    <p> Ton Amour 🥰 Elhadj 🥰</p>
     <div class="heart">❤️❤️❤️</div>
     <img class="image" src="https://source.unsplash.com/300x300/?love,couple" alt="Amour">
+    
+    <script>
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.innerHTML = "❤️";
+            heart.style.position = "absolute";
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            heart.style.top = Math.random() * window.innerHeight + "px";
+            heart.style.fontSize = "2em";
+            heart.style.animation = "blink 1s infinite alternate";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 2000);
+        }
+        setInterval(createHeart, 500);
+    </script>
 </body>
 </html>
